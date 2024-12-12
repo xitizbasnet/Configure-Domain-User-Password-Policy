@@ -1,121 +1,126 @@
-# Configure-Domain-User-Password-Policy
+To make the document more visually engaging and easier to learn from, we can add icons, underline key sections, and structure the content using Markdown formatting. Here's an updated version with icons and improved formatting to make it more user-friendly.
 
-**Configure Domain User Password Policy**
+### Updated Version with Markdown Formatting and Icons:
 
-* Access Group Policy Management (Tools/Group Policy Manage)
-* Right click on Default domain policy, Click on Edit
-* (Computer configuration/Policies/Windows Settings/Security Settings/Account Policies/Password Policy)
-  
-**Enforce password history**
+```markdown
+# 🛠️ **Configuring Domain User Password Policy**  
 
-This security setting determines the number of unique new passwords that have to be associated with a user account before an old password can be reused. The value must be between 0 and 24 passwords.
+This document provides an overview of how to configure password policies for domain user accounts in a Windows environment using Group Policy Management.
 
-This policy enables administrators to enhance security by ensuring that old passwords are not reused continually.
+---
 
-Default:
+## 🚀 **Accessing Group Policy Management**  
 
-24 on domain controllers.
+1. Open the **Group Policy Management** console by navigating to **Tools** > **Group Policy Management**.  
+2. In the left pane, **right-click** on the **Default Domain Policy** and select **Edit**.  
+3. Navigate to:  
+   `Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy`.
 
-0 on stand-alone servers.
+---
 
-Note: By default, member computers follow the configuration of their domain controllers.
+## 🔑 **Password Policy Settings**
 
-To maintain the effectiveness of the password history, do not allow passwords to be changed immediately after they were just changed by also enabling the Minimum password age security policy setting. For information about the minimum password age security policy setting, see Minimum password age
+### 1. **🔒 Enforce Password History**  
+This setting ensures that users cannot reuse old passwords too frequently. It defines the number of unique new passwords that must be associated with a user account before an old password can be reused.  
+- **Range**: 0 to 24 passwords.  
+- **Default**:  
+  - **24** on domain controllers.  
+  - **0** on stand-alone servers.  
+- **Recommendation**: To enforce password history effectively, enable the **Minimum Password Age** policy. This prevents users from cycling through passwords quickly.
 
-**Maximum password age**
+---
 
-This security setting determines the period of time (in days) that a password can be used before the system requires the user to change it. You can set passwords to expire after a number of days between 1 and 999, or you can specify that passwords never expire by setting the number of days to 0. If the maximum password age is between 1 and 999 days, the Minimum password age must be less than the maximum password age. If the maximum password age is set to 0, the minimum password age can be any value between 0 and 998 days.
+### 2. **📅 Maximum Password Age**  
+This policy sets the maximum period a password can be used before the system requires a change.  
+- **Range**: 1 to 999 days (or set to 0 for no expiration).  
+- **Best Practice**: Set password expiration to 30–90 days to limit the risk of unauthorized access.  
+- **Default**: **42 days** on domain controllers.
 
-Note: It is a security best practice to have passwords expire every 30 to 90 days, depending on your environment. This way, an attacker has a limited amount of time in which to crack a user's password and have access to your network resources.
+---
 
-Default: 42.
+### 3. **⏳ Minimum Password Age**  
+This setting defines the minimum period a password must be used before the user can change it. This prevents users from changing passwords repeatedly to bypass other password policies.  
+- **Range**: 1 to 998 days (or set to 0 for no restriction).  
+- **Default**:  
+  - **1** on domain controllers.  
+  - **0** on stand-alone servers.  
+- **Tip**: To ensure password history enforcement works, configure a minimum password age greater than 0.
 
-**Minimum password age**
+---
 
-This security setting determines the period of time (in days) that a password must be used before the user can change it. You can set a value between 1 and 998 days, or you can allow changes immediately by setting the number of days to 0.
+### 4. **🔢 Minimum Password Length**  
+This policy determines the minimum number of characters for a user’s password.  
+- **Range**: 1 to 14 characters (or set to 0 to allow no password).  
+- **Default**:  
+  - **7** on domain controllers.  
+  - **0** on stand-alone servers.
 
-The minimum password age must be less than the Maximum password age, unless the maximum password age is set to 0, indicating that passwords will never expire. If the maximum password age is set to 0, the minimum password age can be set to any value between 0 and 998.
+---
 
-Configure the minimum password age to be more than 0 if you want Enforce password history to be effective. Without a minimum password age, users can cycle through passwords repeatedly until they get to an old favorite. The default setting does not follow this recommendation, so that an administrator can specify a password for a user and then require the user to change the administrator-defined password when the user logs on. If the password history is set to 0, the user does not have to choose a new password. For this reason, Enforce password history is set to 1 by default.
+### 5. **⚙️ Password Complexity Requirements**  
+When enabled, this setting enforces the following complexity requirements:  
+- Passwords must contain at least **six characters**.  
+- Passwords must include characters from at least **three of the following categories**:  
+  - Uppercase English letters (A-Z)  
+  - Lowercase English letters (a-z)  
+  - Base-10 digits (0-9)  
+  - Non-alphabetic characters (e.g., !, $, #, %)  
+- **Default**: Enabled on domain controllers, disabled on stand-alone servers.
 
-Default:
+---
 
-1 on domain controllers.
+### 6. **🛑 Store Passwords Using Reversible Encryption**  
+This setting controls whether passwords are stored using reversible encryption, which is a less secure method. It should only be enabled if absolutely necessary for specific applications.  
+- **Default**: Disabled.
 
-0 on stand-alone servers.
+---
 
-Note: By default, member computers follow the configuration of their domain controllers.
+### 7. **🔐 Account Lockout Duration**  
+This setting determines how long an account remains locked after reaching the account lockout threshold.  
+- **Range**: 0 to 99,999 minutes (or set to 0 for manual unlocking).  
+- **Default**: None (only applies when an account lockout threshold is defined).
 
-**Minimum password length**
+---
 
-This security setting determines the least number of characters that a password for a user account may contain. You can set a value of between 1 and 14 characters, or you can establish that no password is required by setting the number of characters to 0.
+### 8. **❌ Account Lockout Threshold**  
+This policy determines how many failed login attempts result in an account being locked. Once locked, the account cannot be accessed until manually reset or until the lockout duration expires.  
+- **Range**: 0 to 999 failed login attempts (set to 0 to disable lockout).  
+- **Default**: **0** (no account lockout).
 
-Default:
+---
 
-7 on domain controllers.
+### 9. **⏲️ Reset Account Lockout Counter After**  
+This setting defines the number of minutes that must pass after a failed login attempt before the failed attempt counter resets to 0.  
+- **Range**: 1 minute to 99,999 minutes.  
+- **Default**: None (only applies when an account lockout threshold is defined).
 
-0 on stand-alone servers.
+---
 
-Note: By default, member computers follow the configuration of their domain controllers.
+## 💡 **Best Practices**  
+To enhance security, consider the following best practices:  
+- Set **password expiration** between 30 and 90 days to minimize the risk of unauthorized access.  
+- Enable **password complexity requirements** to ensure strong passwords.  
+- Use **account lockout** policies to limit brute-force attacks.
 
-This security setting determines whether passwords must meet complexity requirements.
+---
 
-If this policy is enabled, passwords must meet the following minimum requirements:
+## 🚀 **How to Upload This Document to GitHub**  
 
-Not contain the user's account name or parts of the user's full name that exceed two consecutive characters
+1. **Create a GitHub Repository**:
+   - Log in to your GitHub account and click on the **New Repository** button.
+   - Choose a repository name (e.g., `Password-Policy-Configuration`).
+   - Set the repository to **public** or **private**, then click **Create repository**.
 
-Be at least six characters in length
+2. **Prepare the Document**:
+   - Save the content as a `.md` (Markdown) file on your computer.
 
-Contain characters from three of the following four categories:
+3. **Upload the Document**:
+   - Navigate to your GitHub repository.
+   - Click on **Add file** > **Upload files**.
+   - Drag and drop the file or select it manually.
+   - Commit the changes by providing a commit message and clicking **Commit changes**.
 
-English uppercase characters (A through Z)
+4. **Optionally, Add to README**:
+   - You can include the content in your repository's README file for better accessibility.
 
-English lowercase characters (a through z)
-
-Base 10 digits (0 through 9)
-
-Non-alphabetic characters (for example, !, $, #, %)
-
-Complexity requirements are enforced when passwords are changed or created.
-
-Default:
-
-Enabled on domain controllers.
-
-Disabled on stand-alone servers.
-
-Note: By default, member computers follow the configuration of their domain controllers.
-
-**Store passwords using reversible encryption**
-
-This security setting determines whether the operating system stores passwords using reversible encryption.
-
-This policy provides support for applications that use protocols that require knowledge of the user's password for authentication purposes. Storing passwords using reversible encryption is essentially the same as storing plaintext versions of the passwords. For this reason, this policy should never be enabled unless application requirements outweigh the need to protect password information.
-
-This policy is required when using Challenge-Handshake Authentication Protocol (CHAP) authentication through remote access or Internet Authentication Services (IAS). It is also required when using Digest Authentication in Internet Information Services (IIS).
-
-Default: Disabled.
-
-**Account lockout duration**
-
-This security setting determines the number of minutes a locked-out account remains locked out before automatically becoming unlocked. The available range is from 0 minutes through 99,999 minutes. If you set the account lockout duration to 0, the account will be locked out until an administrator explicitly unlocks it.
-
-If an account lockout threshold is defined, the account lockout duration must be greater than or equal to the reset time.
-
-Default: None, because this policy setting only has meaning when an Account lockout threshold is specified.
-
-**Account lockout threshold**
-
-This security setting determines the number of failed logon attempts that causes a user account to be locked out. A locked-out account cannot be used until it is reset by an administrator or until the lockout duration for the account has expired. You can set a value between 0 and 999 failed logon attempts. If you set the value to 0, the account will never be locked out.
-
-Failed password attempts against workstations or member servers that have been locked using either CTRL+ALT+DELETE or password-protected screen savers count as failed logon attempts.
-
-Default: 0.
-
-**Reset account lockout counter after**
-
-This security setting determines the number of minutes that must elapse after a failed logon attempt before the failed logon attempt counter is reset to 0 bad logon attempts. The available range is 1 minute to 99,999 minutes.
-
-If an account lockout threshold is defined, this reset time must be less than or equal to the Account lockout duration.
-
-Default: None, because this policy setting only has meaning when an Account lockout threshold is specified.
+---
