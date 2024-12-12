@@ -1,9 +1,3 @@
-To incorporate icons and blue-colored headings while keeping the document professional, we can still use Markdown with HTML for styling the headings. However, icons can be included by using Unicode characters or by referencing specific icon sets (such as FontAwesome) for web-based platforms like GitHub. For the sake of simplicity, I’ll use basic Unicode icons where applicable and apply the blue color to the headings using HTML tags.
-
-Here’s the revised version with blue headings and icons:
-
----
-
 # <span style="color:blue;">🔒 Configuring Domain User Password Policy</span>
 
 This document provides a comprehensive guide for configuring password policies for domain user accounts in a Windows environment using Group Policy Management. Properly configuring password policies is critical for securing user accounts and protecting sensitive information.
@@ -135,11 +129,4 @@ To optimize security while maintaining usability, consider the following best pr
 4. **Optionally, Add to README**:
    - You may choose to add the content to the repository's **README** file for better accessibility.
 
----
-
-### Notes:
-
-- **HTML Styling**: The headings use HTML `span` tags with inline CSS to change the color to blue. This approach works for Markdown files rendered on platforms that support HTML, such as GitHub.
-- **Icons**: I’ve added relevant Unicode icons to each heading. If you want more sophisticated icons (e.g., from FontAwesome), they will need to be linked or embedded in a different way, which requires support from the platform where the file is displayed.
-
-This version retains professionalism while improving the layout for easier reading and better organization, with the blue-colored headings giving it a polished and structured look.
+--- 
